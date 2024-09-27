@@ -1,1 +1,2 @@
-docker-compose up
+Для запуска приложения:
+'''docker-compose up'''
