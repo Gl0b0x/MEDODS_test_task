@@ -1,0 +1,21 @@
+services:
+  app:
+    build: ./
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    command: ./wait-for-db.sh ./app
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+  postgres:
+    image: bitnami/postgresql:latest
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5433"
